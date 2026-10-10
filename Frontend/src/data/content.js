@@ -100,6 +100,34 @@ export const expertiseGroups = [
     description: 'Reporting tools that help teams work with information across PeopleSoft.',
     items: ['Kibana', 'nVision'],
   },
+  {
+    id: 'oracle-fusion-financial',
+    icon: 'cloud',
+    title: 'Oracle Fusion Financial',
+    description: 'Cloud financials that modernize accounting, cash and asset management on Oracle Fusion Cloud ERP.',
+    items: [
+      'General Ledger',
+      'Accounts Payable',
+      'Accounts Receivable',
+      'Expenses',
+      'Cash Management',
+      'Fixed Assets',
+    ],
+  },
+  {
+    id: 'oracle-fusion-scm',
+    icon: 'server',
+    title: 'Oracle Fusion SCM',
+    description: 'Supply chain, procurement and manufacturing capabilities delivered on Oracle Fusion Cloud SCM.',
+    items: [
+      'Procurement',
+      'Inventory Management',
+      'Order Management',
+      'Manufacturing',
+      'Supply Chain Planning',
+      'Product Lifecycle Management',
+    ],
+  },
 ]
 
 export const services = [
