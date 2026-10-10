@@ -153,7 +153,7 @@ export default function Footer() {
                   </a>
                 </ContactItem>
                 <ContactItem icon="clock">
-                  <span><span className="font-medium text-white">Hours:</span> {company.hours}</span>
+                  <span>{company.hours}</span>
                 </ContactItem>
               </ul>
             </StaggerItem>

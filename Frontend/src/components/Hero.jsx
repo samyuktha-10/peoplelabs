@@ -61,7 +61,7 @@ export default function Hero() {
             className="mb-6 inline-flex items-center gap-2.5 rounded-full border border-sky-200/80 bg-white/70 px-4 py-2 text-sm font-semibold tracking-wide text-sky-700 shadow-sm backdrop-blur"
           >
             <span aria-hidden="true" className="pulse-dot h-2 w-2 rounded-full bg-sky-500" />
-            Oracle &amp; PeopleSoft Consulting
+            Oracle Cloud &amp; PeopleSoft Consulting
           </motion.p>
 
           <RevealWords
