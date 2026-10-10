@@ -285,7 +285,6 @@ export default function CareerApplicationForm({
                   >
                     <span className={`mb-2 flex h-10 w-10 items-center justify-center rounded-full bg-sky-100 text-sky-700 transition-transform duration-200 ${dragging && !reduceMotion ? '-translate-y-0.5 scale-105' : ''}`} aria-hidden="true"><Icon name="upload-cloud" size={21} /></span>
                     <span className="text-sm font-semibold text-slate-800">Click or drag your resume here</span>
-                    <span className="mt-1 text-xs text-slate-500">PDF only • Maximum 5 MB</span>
                   </motion.label>
                 ) : (
                   <motion.div

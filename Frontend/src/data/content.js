@@ -103,7 +103,7 @@ export const expertiseGroups = [
   {
     id: 'oracle-fusion-financial',
     icon: 'cloud',
-    title: 'Oracle Fusion Financial',
+    title: 'Oracle Fusion Financials',
     description: 'Cloud financials that modernize accounting, cash and asset management on Oracle Fusion Cloud ERP.',
     items: [
       'General Ledger',

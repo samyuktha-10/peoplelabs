@@ -78,7 +78,7 @@ export default function Hero() {
           />
 
           <motion.p variants={rise} initial={initial} animate={state} custom={0.65} className="mt-6 max-w-xl text-base leading-7 text-slate-600 sm:text-lg sm:leading-8">
-            Founded in 2016, PeopleLabs Consulting provides high-quality IT consulting services to organizations across a range of industries. Our expertise spans Orcale Fusion Supply chain, Orcale Cloud Financials, Oracle Fusion SCM, PeopleSoft FSCM, PeopleSoft HCM, PeopleSoft Campus Solutions, Oracle Cloud, managed services, training, and reporting.
+            Founded in 2016, PeopleLabs Consulting provides high-quality IT consulting services to organizations across a range of industries. Our expertise spans Oracle Fusion Financials, Oracle Fusion SCM, PeopleSoft FSCM, PeopleSoft HCM, PeopleSoft Campus Solutions, Oracle Cloud, managed services, training, and reporting.
           </motion.p>
 
           <motion.div variants={rise} initial={initial} animate={state} custom={0.78} className="mt-7 inline-flex items-center gap-2.5 text-sm font-medium text-slate-700">
