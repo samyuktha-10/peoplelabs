@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { motion, useReducedMotion } from 'motion/react'
 import { FadeUp, StaggerGroup, StaggerItem } from '../components/motion/MotionPrimitives.jsx'
 import CareerApplicationForm from '../components/CareerApplicationForm.jsx'
-import CareersVisual from '../components/CareersVisual.jsx'
+import FinancialsEcosystemVisual from '../components/FinancialsEcosystemVisual.jsx'
 import Icon from '../components/Icon.jsx'
 import { careers } from '../data/careers.js'
 import { scrollToElement } from '../components/fx/scroll.js'
@@ -168,7 +168,7 @@ export default function Careers() {
             </StaggerItem>
           </StaggerGroup>
           <FadeUp className="mx-auto w-full max-w-[560px] lg:justify-self-end" delay={0.42} animateOnMount>
-            <Depth3D><CareersVisual /></Depth3D>
+            <Depth3D><FinancialsEcosystemVisual /></Depth3D>
           </FadeUp>
         </div>
       </section>
