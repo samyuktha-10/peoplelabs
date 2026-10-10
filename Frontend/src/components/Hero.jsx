@@ -106,7 +106,7 @@ export default function Hero({ scrollTo }) {
             {/* Main headline with sky blue gradient text */}
             <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-slate-900 tracking-tight leading-tight font-['Inter']">
               <AnimatedLetters
-                text="Oracle & PeopleSoft"
+                text="Oracle Cloud & PeopleSoft"
                 className="bg-gradient-to-r from-sky-600 via-sky-500 to-sky-600 bg-clip-text text-transparent"
                 delay={0.1}
               />{' '}
