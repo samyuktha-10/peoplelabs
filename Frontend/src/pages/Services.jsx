@@ -8,6 +8,7 @@ import RevealWords from '../components/fx/RevealWords.jsx'
 import { useIntroDone } from '../components/fx/intro.js'
 import Hero3D from '../components/fx/Hero3D.jsx'
 import Scroll3D from '../components/fx/Scroll3D.jsx'
+import ScmEcosystemVisual from '../components/ScmEcosystemVisual.jsx'
 
 const processSteps = [
   { title: 'Assess', description: 'Understand the current environment and requirements.', icon: 'search' },
@@ -48,6 +49,23 @@ export default function Services() {
       </section>
 
       <ServicesExplorer />
+
+      <section id="oracle-fusion-scm" className="ambient-bg border-t border-sky-100 bg-white py-14 sm:py-16 lg:py-20" aria-labelledby="oracle-fusion-scm-title">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <FadeUp className="mx-auto mb-9 max-w-2xl text-center sm:mb-11">
+            <p className="mb-3 text-xs font-bold uppercase tracking-[0.16em] text-sky-700">Oracle Cloud</p>
+            <h2 id="oracle-fusion-scm-title" className="text-3xl font-bold tracking-tight text-slate-900 lg:text-4xl">
+              Oracle Fusion SCM
+            </h2>
+            <p className="mt-4 text-base leading-7 text-slate-600 sm:text-lg">
+              End-to-end supply chain capabilities on Oracle Fusion Cloud, from product and inventory to procurement, pricing and cost management.
+            </p>
+          </FadeUp>
+          <FadeUp className="mx-auto max-w-xl">
+            <ScmEcosystemVisual />
+          </FadeUp>
+        </div>
+      </section>
 
       <section className="ambient-bg bg-white py-14 sm:py-16 lg:py-20" aria-labelledby="service-approach-heading">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">

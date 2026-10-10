@@ -4,7 +4,6 @@ import Navbar from '../components/Navbar';
 import ContactFooter from '../components/ContactFooter';
 import ScrollToTop from '../components/ScrollToTop';
 import ThreeCanvas3D from '../components/ThreeCanvas3D';
-import ScmEcosystemVisual from '../components/ScmEcosystemVisual';
 import AnimatedLetters, { AnimatedHeading } from '../components/AnimatedLetters';
 import { servicesList } from '../data/servicesPageData';
 import { ChevronRight, CheckCircle2, Shield, Sparkles, Activity, Layers, ArrowRight, Zap, Check } from 'lucide-react';
@@ -310,32 +309,6 @@ export default function ServicesPage() {
 
             </div>
 
-          </div>
-        </section>
-
-        {/* 2b. ORACLE FUSION SCM ECOSYSTEM DIAGRAM */}
-        <section className="py-16 md:py-20 bg-white border-t border-sky-100" aria-labelledby="oracle-fusion-scm-title">
-          <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: false, amount: 0.2 }}
-              transition={{ duration: 0.6 }}
-              className="text-center max-w-2xl mx-auto space-y-3 mb-8"
-            >
-              <span className="text-xs font-bold uppercase tracking-wider text-sky-600 bg-sky-100 px-3.5 py-1 rounded-full border border-sky-200 inline-block">
-                ORACLE CLOUD
-              </span>
-              <h2 id="oracle-fusion-scm-title" className="text-2xl sm:text-4xl font-extrabold text-slate-900 font-['Inter']">
-                Oracle Fusion SCM
-              </h2>
-              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                End-to-end supply chain capabilities on Oracle Fusion Cloud, from product and inventory to procurement, pricing and cost management.
-              </p>
-            </motion.div>
-            <div className="max-w-xl mx-auto">
-              <ScmEcosystemVisual />
-            </div>
           </div>
         </section>
 
