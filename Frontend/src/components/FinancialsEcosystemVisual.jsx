@@ -1,8 +1,8 @@
 import EcosystemDiagram from './EcosystemDiagram.jsx'
 
-// Oracle Fusion Financials modules (careers page). Eight modules around the
-// hub, with Intercompany beneath it.
-const items = [
+// Oracle Fusion Financials modules (services page). Four cards on the left and
+// five on the right, so the diagram uses the same canvas as the SCM one.
+const left = [
   {
     label: 'General Ledger',
     glyph: <><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" /><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" /></>,
@@ -19,6 +19,9 @@ const items = [
     label: 'Cash Management',
     glyph: <><rect x="2" y="6" width="20" height="12" rx="2" /><circle cx="12" cy="12" r="2.5" /></>,
   },
+]
+
+const right = [
   {
     label: 'Fusion Tax',
     glyph: <><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" /><path d="M14 2v6h6" /><path d="M8 13h8M8 17h8" /></>,
@@ -35,20 +38,19 @@ const items = [
     label: 'Budgeting',
     glyph: <><path d="M21.2 15.9A10 10 0 1 1 8 2.8" /><path d="M22 12A10 10 0 0 0 12 2v10z" /></>,
   },
+  {
+    label: 'Intercompany',
+    glyph: <><path d="M8 3 4 7l4 4" /><path d="M4 7h16" /><path d="M16 21l4-4-4-4" /><path d="M20 17H4" /></>,
+  },
 ]
-
-const bottomItem = {
-  label: 'Intercompany',
-  glyph: <><path d="M8 3 4 7l4 4" /><path d="M4 7h16" /><path d="M16 21l4-4-4-4" /><path d="M20 17H4" /></>,
-}
 
 export default function FinancialsEcosystemVisual({ start = true }) {
   return (
     <EcosystemDiagram
       hubTitle="Oracle Fusion Financials"
       hubSubtitle="Connected finance operations"
-      items={items}
-      bottomItem={bottomItem}
+      left={left}
+      right={right}
       ariaLabel="Oracle Fusion Financials ecosystem: General Ledger, Accounts Payable, Accounts Receivable, Cash Management, Fusion Tax, Fixed Assets, Fusion Expenses, Budgeting and Intercompany"
       start={start}
     />

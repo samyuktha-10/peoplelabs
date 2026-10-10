@@ -63,10 +63,10 @@ export default function Services() {
             </p>
           </FadeUp>
           <div className="grid gap-8 md:grid-cols-2 md:items-start">
-            <FadeUp className="mx-auto w-full max-w-[560px]">
+            <FadeUp className="mx-auto w-full">
               <ScmEcosystemVisual />
             </FadeUp>
-            <FadeUp className="mx-auto w-full max-w-[560px]">
+            <FadeUp className="mx-auto w-full">
               <FinancialsEcosystemVisual />
             </FadeUp>
           </div>

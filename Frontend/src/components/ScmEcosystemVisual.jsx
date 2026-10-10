@@ -1,7 +1,7 @@
 import EcosystemDiagram from './EcosystemDiagram.jsx'
 
-// Oracle Fusion SCM subsidiaries (services page).
-const items = [
+// Oracle Fusion SCM subsidiaries (services page): five per side.
+const left = [
   {
     label: 'Product Management',
     glyph: <><path d="M21 8 12 3 3 8v8l9 5 9-5V8Z" /><path d="M3 8l9 5 9-5" /><path d="M12 13v8" /></>,
@@ -22,6 +22,9 @@ const items = [
     label: 'RSSP',
     glyph: <><path d="M2 6h12v10H2z" /><path d="M14 10h4l4 4v2h-8" /><circle cx="6" cy="18" r="2" /><circle cx="17" cy="18" r="2" /></>,
   },
+]
+
+const right = [
   {
     label: 'Purchasing',
     glyph: <><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" /><path d="M3 6h18" /><path d="M16 10a4 4 0 0 1-8 0" /></>,
@@ -49,7 +52,8 @@ export default function ScmEcosystemVisual({ start = true }) {
     <EcosystemDiagram
       hubTitle="Oracle Fusion SCM"
       hubSubtitle="Connected supply chain"
-      items={items}
+      left={left}
+      right={right}
       ariaLabel="Oracle Fusion SCM ecosystem: Product Management, Inventory Management, Order Management, Pricing, RSSP, Purchasing, Sourcing, Procurement Contracts, SQM and Cost Management"
       start={start}
     />
