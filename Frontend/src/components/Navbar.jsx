@@ -13,28 +13,6 @@ const links = [
   { to: '/about', label: 'About Us' },
 ]
 
-function LoginControl({ mobile = false }) {
-  const reduceMotion = useReducedMotion()
-
-  return (
-    <motion.button
-      type="button"
-      disabled
-      aria-label="Login"
-      title="Login is not available yet"
-      whileHover={reduceMotion ? undefined : { scale: 1.025 }}
-      whileTap={reduceMotion ? undefined : { scale: 0.96 }}
-      transition={{ type: 'spring', stiffness: 420, damping: 24 }}
-      className={`group inline-flex cursor-default items-center gap-2 rounded-md text-white transition-colors duration-200 hover:bg-white/10 ${mobile ? 'w-full justify-start px-3 py-2 text-base font-semibold sm:w-auto' : 'px-1 py-2 text-sm font-semibold'}`}
-    >
-      <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full text-white transition-[background-color,color] duration-200 group-hover:bg-sky-300/20 group-hover:text-sky-100">
-        <Icon name="user" size={20} strokeWidth={1.8} className="transition-transform duration-200 group-hover:scale-110 motion-reduce:transform-none motion-reduce:transition-none" />
-      </span>
-      <span>Login</span>
-    </motion.button>
-  )
-}
-
 function desktopLinkClass(isActive) {
   return `relative inline-flex whitespace-nowrap rounded-full px-3.5 py-2 text-base font-semibold transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white ${isActive ? 'text-white' : 'text-white/90 hover:text-white'}`
 }
@@ -124,7 +102,6 @@ export default function Navbar() {
         </nav>
 
         <div className="hidden shrink-0 items-center gap-4 lg:flex">
-          <LoginControl />
           <Magnetic strength={0.3}>
             <a href={contactHref} className={`btn-shine btn-shine--light inline-flex items-center justify-center rounded-lg bg-white font-semibold text-sky-700 shadow-lg shadow-sky-900/10 transition-[background-color,box-shadow,padding] duration-[250ms] hover:bg-sky-50 hover:shadow-xl active:scale-[.98] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white ${scrolled ? 'min-h-10 px-4 py-2 text-sm' : 'min-h-11 px-5 py-2.5 text-base'}`}>
               Contact Us
@@ -159,7 +136,6 @@ export default function Navbar() {
             </NavLink>
           ))}
           <div className="mt-2 flex flex-col gap-2 border-t border-white/20 pt-3 sm:flex-row sm:items-center sm:justify-between">
-            <LoginControl mobile />
             <a href={contactHref} onClick={() => setOpen(false)} className="inline-flex min-h-11 w-full items-center justify-center rounded-lg bg-white px-4 text-sm font-semibold text-sky-700 transition-[background-color,transform,box-shadow] duration-200 hover:-translate-y-px motion-reduce:transform-none hover:bg-sky-50 hover:shadow-sm active:scale-[.98] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white sm:w-auto">
               Contact Us
             </a>

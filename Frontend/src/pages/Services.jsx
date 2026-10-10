@@ -8,7 +8,6 @@ import RevealWords from '../components/fx/RevealWords.jsx'
 import { useIntroDone } from '../components/fx/intro.js'
 import Hero3D from '../components/fx/Hero3D.jsx'
 import Scroll3D from '../components/fx/Scroll3D.jsx'
-import ScmEcosystemVisual from '../components/ScmEcosystemVisual.jsx'
 
 const processSteps = [
   { title: 'Assess', description: 'Understand the current environment and requirements.', icon: 'search' },
@@ -60,9 +59,6 @@ export default function Services() {
             <p className="mt-4 text-base leading-7 text-slate-600 sm:text-lg">
               End-to-end supply chain capabilities on Oracle Fusion Cloud, from product and inventory to procurement, pricing and cost management.
             </p>
-          </FadeUp>
-          <FadeUp className="mx-auto max-w-xl">
-            <ScmEcosystemVisual />
           </FadeUp>
         </div>
       </section>

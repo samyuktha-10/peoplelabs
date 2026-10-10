@@ -2,14 +2,12 @@ import { useEffect, useRef, useState } from 'react'
 import { motion, useReducedMotion } from 'motion/react'
 import { FadeUp, StaggerGroup, StaggerItem } from '../components/motion/MotionPrimitives.jsx'
 import CareerApplicationForm from '../components/CareerApplicationForm.jsx'
-import FinancialsEcosystemVisual from '../components/FinancialsEcosystemVisual.jsx'
 import Icon from '../components/Icon.jsx'
 import { careers } from '../data/careers.js'
 import { scrollToElement } from '../components/fx/scroll.js'
 import HeroBackdrop from '../components/fx/HeroBackdrop.jsx'
 import RevealWords from '../components/fx/RevealWords.jsx'
 import { useIntroDone } from '../components/fx/intro.js'
-import Depth3D from '../components/fx/Depth3D.jsx'
 import TiltCard from '../components/fx/TiltCard.jsx'
 import Scroll3D from '../components/fx/Scroll3D.jsx'
 
@@ -167,9 +165,6 @@ export default function Careers() {
               <span className="text-sm text-slate-500">Edmonton-based remote opportunities</span>
             </StaggerItem>
           </StaggerGroup>
-          <FadeUp className="mx-auto w-full max-w-[560px] lg:justify-self-end" delay={0.42} animateOnMount>
-            <Depth3D><FinancialsEcosystemVisual /></Depth3D>
-          </FadeUp>
         </div>
       </section>
 
