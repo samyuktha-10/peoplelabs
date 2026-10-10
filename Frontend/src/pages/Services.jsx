@@ -72,10 +72,10 @@ export default function Services() {
 
       <ModuleShowcase
         id="oracle-fusion-financials"
-        sectionTitle="Oracle Cloud Financials"
+        sectionTitle="Oracle Cloud Financial"
         placement="last"
-        eyebrow="ORACLE CLOUD · FINANCIALS"
-        title="Oracle Fusion Financials"
+        eyebrow="ORACLE CLOUD · FINANCIAL"
+        title="Oracle Fusion Financial"
         description="Accounting, cash and asset management on Oracle Fusion Cloud ERP."
         bullets={[
           'General Ledger, Payables and Receivables implementation',

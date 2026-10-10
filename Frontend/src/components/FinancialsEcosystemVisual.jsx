@@ -47,11 +47,11 @@ const right = [
 export default function FinancialsEcosystemVisual({ start = true }) {
   return (
     <EcosystemDiagram
-      hubTitle="Oracle Fusion Financials"
+      hubTitle="Oracle Fusion Financial"
       hubSubtitle="Connected finance operations"
       left={left}
       right={right}
-      ariaLabel="Oracle Fusion Financials ecosystem: General Ledger, Accounts Payable, Accounts Receivable, Cash Management, Fusion Tax, Fixed Assets, Fusion Expenses, Budgeting and Intercompany"
+      ariaLabel="Oracle Fusion Financial ecosystem: General Ledger, Accounts Payable, Accounts Receivable, Cash Management, Fusion Tax, Fixed Assets, Fusion Expenses, Budgeting and Intercompany"
       start={start}
     />
   )
