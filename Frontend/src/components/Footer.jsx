@@ -31,22 +31,6 @@ function ContactItem({ icon, children }) {
   )
 }
 
-// Icon-only contact link: the symbol is the visible cue; the label is kept for screen readers.
-function IconOnlyContactLink({ icon, href, label }) {
-  return (
-    <li className="group flex items-start text-sm leading-6 text-sky-50">
-      <a
-        href={href}
-        aria-label={label}
-        title={label}
-        className="mt-0.5 inline-flex shrink-0 rounded-md text-white transition-transform duration-200 hover:scale-110 hover:text-sky-100 motion-reduce:transform-none motion-reduce:transition-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
-      >
-        <Icon name={icon} size={19} strokeWidth={1.8} />
-      </a>
-    </li>
-  )
-}
-
 function WhatsAppIcon({ className = '' }) {
   return (
     <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" className={className} focusable="false">
@@ -152,8 +136,22 @@ export default function Footer() {
                     <span key={line} className="block">{line}</span>
                   ))}
                 </ContactItem>
-                <IconOnlyContactLink icon="phone" href={company.phoneHref} label={`Call ${company.phone}`} />
-                <IconOnlyContactLink icon="mail" href={company.emailHref} label={`Email ${company.email}`} />
+                <ContactItem icon="phone">
+                  <a
+                    className="text-white transition-colors hover:text-sky-100 focus-visible:rounded focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                    href={company.phoneHref}
+                  >
+                    {company.phone}
+                  </a>
+                </ContactItem>
+                <ContactItem icon="mail">
+                  <a
+                    className="break-all text-white transition-colors hover:text-sky-100 focus-visible:rounded focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                    href={company.emailHref}
+                  >
+                    {company.email}
+                  </a>
+                </ContactItem>
                 <ContactItem icon="clock">
                   <span><span className="font-medium text-white">Hours:</span> {company.hours}</span>
                 </ContactItem>
