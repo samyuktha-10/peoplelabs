@@ -302,3 +302,28 @@ button:hover .cta-arrow {
     animation: none !important;
   }
 }
+
+/* Oracle Cloud module diagrams: floating hub card and its glow ring (transform/opacity only). */
+.eco-hub {
+  animation: eco-hub-float 6s ease-in-out infinite;
+  will-change: transform;
+}
+@keyframes eco-hub-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+.eco-hub-ring {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: eco-ring-pulse 4s ease-in-out infinite;
+}
+@keyframes eco-ring-pulse {
+  0%, 100% { opacity: 0.25; transform: scale(0.98); }
+  50% { opacity: 0.7; transform: scale(1.03); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .eco-hub,
+  .eco-hub-ring {
+    animation: none !important;
+  }
+}

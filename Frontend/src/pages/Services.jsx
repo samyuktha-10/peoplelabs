@@ -55,6 +55,9 @@ export default function Services() {
 
       <ModuleShowcase
         id="oracle-fusion-scm"
+        sectionEyebrow="ORACLE CLOUD"
+        sectionTitle="Oracle Cloud SCM"
+        placement="first"
         eyebrow="ORACLE CLOUD · SCM"
         title="Oracle Fusion SCM"
         description="Supply chain, procurement and manufacturing capabilities delivered on Oracle Fusion Cloud SCM."
@@ -72,6 +75,9 @@ export default function Services() {
 
       <ModuleShowcase
         id="oracle-fusion-financials"
+        sectionEyebrow="ORACLE CLOUD"
+        sectionTitle="Oracle Cloud Financials"
+        placement="last"
         eyebrow="ORACLE CLOUD · FINANCIALS"
         title="Oracle Fusion Financials"
         description="Cloud financials that modernize accounting, cash and asset management on Oracle Fusion Cloud ERP."
