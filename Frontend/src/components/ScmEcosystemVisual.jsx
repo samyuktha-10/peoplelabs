@@ -1,4 +1,4 @@
-import { motion, useReducedMotion } from 'motion/react'
+import { motion, useMotionValue, useReducedMotion, useSpring, useTransform } from 'motion/react'
 
 // Animated SVG ecosystem diagram for Oracle Fusion SCM. Reuses the same
 // motion classes as the PeopleSoft hero illustration (hero.css) so the two
@@ -88,12 +88,33 @@ const moduleDurations = ['5.6s', '6.1s', '5.2s', '6.4s', '5.8s', '6.2s', '5.4s',
 
 export default function ScmEcosystemVisual({ start = true }) {
   const reduceMotion = useReducedMotion()
+  // Gentle pointer parallax on the backdrop, same behaviour as the hero diagram.
+  const pointerX = useMotionValue(0)
+  const pointerY = useMotionValue(0)
+  const springX = useSpring(pointerX, { stiffness: 90, damping: 24, mass: 0.55 })
+  const springY = useSpring(pointerY, { stiffness: 90, damping: 24, mass: 0.55 })
+  const backgroundX = useTransform(springX, (value) => value * -0.45)
+  const backgroundY = useTransform(springY, (value) => value * -0.45)
+
+  function handlePointerMove(event) {
+    if (reduceMotion || event.pointerType !== 'mouse') return
+    const bounds = event.currentTarget.getBoundingClientRect()
+    pointerX.set(((event.clientX - bounds.left) / bounds.width - 0.5) * 8)
+    pointerY.set(((event.clientY - bounds.top) / bounds.height - 0.5) * 8)
+  }
+
+  function resetPointer() {
+    pointerX.set(0)
+    pointerY.set(0)
+  }
 
   return (
     <svg
       className="w-full h-auto"
       viewBox="0 0 560 540"
       role="img"
+      onPointerMove={handlePointerMove}
+      onPointerLeave={resetPointer}
       aria-label="Oracle Fusion SCM ecosystem: Product Management, Inventory Management, Order Management, Pricing, RSSP, Purchasing, Sourcing, Procurement Contracts, SQM and Cost Management"
     >
       <defs>
@@ -105,12 +126,30 @@ export default function ScmEcosystemVisual({ start = true }) {
         </filter>
       </defs>
 
-      {/* Background */}
-      <circle cx="280" cy="270" r="215" fill="#F0F9FF" />
-      <circle cx="280" cy="270" r="215" fill="none" stroke="#E0F2FE" strokeWidth="1.5" />
-      <circle cx="280" cy="270" r="236" fill="none" stroke="#BAE6FD" strokeWidth="1.5" strokeDasharray="3 9" opacity="0.7" />
-      <rect width="560" height="540" fill="url(#scm-dots)" opacity="0.5" />
+      {/* Background (parallax) */}
+      <motion.g style={{ x: backgroundX, y: backgroundY }}>
+        <circle cx="280" cy="270" r="215" fill="#F0F9FF" />
+        <circle cx="280" cy="270" r="215" fill="none" stroke="#E0F2FE" strokeWidth="1.5" />
+        <circle cx="280" cy="270" r="236" fill="none" stroke="#BAE6FD" strokeWidth="1.5" strokeDasharray="3 9" opacity="0.7" />
+        <rect width="560" height="540" fill="url(#scm-dots)" opacity="0.5" />
+        <rect x="40" y="36" width="14" height="14" rx="4" fill="#38BDF8" opacity="0.85" transform="rotate(20 47 43)" className="hero-visual__tech-dot" />
+        <rect x="506" y="420" width="12" height="12" rx="4" fill="#BAE6FD" transform="rotate(-15 512 426)" className="hero-visual__tech-dot" style={{ animationDelay: '1.2s' }} />
+        <g fill="#0EA5E9" opacity="0.5" className="hero-visual__tech-dot">
+          <circle cx="70" cy="500" r="3" /><circle cx="86" cy="508" r="3" /><circle cx="56" cy="514" r="3" />
+        </g>
+      </motion.g>
       <circle className="hero-visual__halo" cx="280" cy="270" r="100" fill="none" stroke="#38BDF8" strokeWidth="2" />
+
+      {/* Orbit rings: dashed ring with a travelling dot, plus a slow green accent */}
+      <g className="hero-visual__orbit" style={{ transformOrigin: '280px 270px' }} aria-hidden="true">
+        <circle cx="280" cy="270" r="150" fill="none" stroke="#7DD3FC" strokeWidth="1.2" strokeDasharray="2 10" opacity="0.7" />
+        <circle cx="430" cy="270" r="11" fill="#38BDF8" opacity="0.22" />
+        <circle cx="430" cy="270" r="4.5" fill="#0EA5E9" />
+      </g>
+      <g className="hero-visual__orbit hero-visual__orbit--slow" style={{ transformOrigin: '280px 270px' }} aria-hidden="true">
+        <circle cx="280" cy="22" r="10" fill="#8FBF45" opacity="0.25" />
+        <circle cx="280" cy="22" r="4.5" fill="#3F8F2C" />
+      </g>
 
       {/* Connections */}
       <g fill="none" stroke="#0EA5E9" strokeWidth="2" strokeLinecap="round" className="hero-visual__connections">
