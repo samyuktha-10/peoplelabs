@@ -12,7 +12,6 @@ import Scroll3D from './fx/Scroll3D.jsx'
 // so the connector spacer sets the gap between the two rows.
 export default function ModuleShowcase({
   id,
-  sectionEyebrow,
   sectionTitle,
   eyebrow,
   title,
@@ -30,7 +29,6 @@ export default function ModuleShowcase({
     <section aria-labelledby={sectionTitleId} className={`bg-white ${sectionPadding}`}>
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <Reveal className="mx-auto mb-10 max-w-2xl text-center lg:mb-12">
-          <p className="mb-3 text-xs font-bold uppercase tracking-[0.16em] text-sky-700">{sectionEyebrow}</p>
           <h2 id={sectionTitleId} className="text-3xl font-bold tracking-tight text-slate-900 lg:text-4xl">
             {sectionTitle}
           </h2>

@@ -55,7 +55,6 @@ export default function Services() {
 
       <ModuleShowcase
         id="oracle-fusion-scm"
-        sectionEyebrow="ORACLE CLOUD"
         sectionTitle="Oracle Cloud SCM"
         placement="first"
         eyebrow="ORACLE CLOUD · SCM"
@@ -75,7 +74,6 @@ export default function Services() {
 
       <ModuleShowcase
         id="oracle-fusion-financials"
-        sectionEyebrow="ORACLE CLOUD"
         sectionTitle="Oracle Cloud Financials"
         placement="last"
         eyebrow="ORACLE CLOUD · FINANCIALS"
