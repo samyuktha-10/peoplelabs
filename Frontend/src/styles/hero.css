@@ -327,3 +327,33 @@ button:hover .cta-arrow {
     animation: none !important;
   }
 }
+
+/* SCM diagram: turning hub rings and sweep line (transform only, around the hub centre). */
+.scm-spin,
+.scm-spin-slow,
+.scm-sweep {
+  transform-box: view-box;
+  transform-origin: 300px 260px;
+  will-change: transform;
+}
+.scm-spin {
+  animation: scm-turn 40s linear infinite;
+}
+.scm-spin-slow {
+  animation: scm-turn 70s linear infinite reverse;
+}
+.scm-sweep {
+  animation: scm-turn 9s linear infinite;
+}
+@keyframes scm-turn {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .scm-spin,
+  .scm-spin-slow,
+  .scm-sweep {
+    animation: none !important;
+  }
+}

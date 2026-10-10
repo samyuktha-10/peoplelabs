@@ -59,13 +59,11 @@ export default function Services() {
         placement="first"
         eyebrow="ORACLE CLOUD · SCM"
         title="Oracle Fusion SCM"
-        description="Supply chain, procurement and manufacturing capabilities delivered on Oracle Fusion Cloud SCM."
+        description="Procurement, inventory and manufacturing on Oracle Fusion Cloud SCM."
         bullets={[
-          'Implementation of Procurement, Inventory Management and Order Management',
-          'Manufacturing and Supply Chain Planning configuration',
-          'Cloud readiness and migration planning for your supply chain',
-          'Hybrid integrations with your existing PeopleSoft and third-party systems',
-          'Reporting and ongoing technical and functional support',
+          'Procurement, Inventory and Order Management implementation',
+          'Manufacturing and supply chain planning setup',
+          'Cloud migration planning and ongoing support',
         ]}
         diagram={<ScmEcosystemVisual />}
       />
@@ -78,13 +76,11 @@ export default function Services() {
         placement="last"
         eyebrow="ORACLE CLOUD · FINANCIALS"
         title="Oracle Fusion Financials"
-        description="Cloud financials that modernize accounting, cash and asset management on Oracle Fusion Cloud ERP."
+        description="Accounting, cash and asset management on Oracle Fusion Cloud ERP."
         bullets={[
-          'Implementation of General Ledger, Accounts Payable and Accounts Receivable',
-          'Cash Management, Fixed Assets and Fusion Expenses configuration',
-          'Fusion Tax setup and rollout',
-          'Cloud readiness and migration planning for finance operations',
-          'Reporting and ongoing technical and functional support',
+          'General Ledger, Payables and Receivables implementation',
+          'Cash Management, Fixed Assets and Expenses setup',
+          'Fusion Tax rollout and ongoing support',
         ]}
         diagram={<FinancialsEcosystemVisual />}
         reverse

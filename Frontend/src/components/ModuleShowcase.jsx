@@ -1,8 +1,41 @@
-import { Link } from 'react-router-dom'
+import { motion, useReducedMotion } from 'motion/react'
 import Icon from './Icon.jsx'
 import Reveal from './Reveal.jsx'
 import Depth3D from './fx/Depth3D.jsx'
 import Scroll3D from './fx/Scroll3D.jsx'
+
+// Section title where each letter rises in once, staggered. Reduced-motion users
+// get the plain heading. The aria-label keeps the full title for screen readers.
+function LetterHeading({ id, text, className }) {
+  const reduceMotion = useReducedMotion()
+
+  if (reduceMotion) {
+    return (
+      <h2 id={id} className={className}>
+        {text}
+      </h2>
+    )
+  }
+
+  return (
+    <h2 id={id} aria-label={text} className={className}>
+      {Array.from(text).map((char, index) => (
+        <motion.span
+          key={`${char}-${index}`}
+          aria-hidden="true"
+          className="inline-block whitespace-pre"
+          initial={{ opacity: 0, y: '0.45em' }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.6 }}
+          transition={{ duration: 0.5, delay: index * 0.04, ease: [0.16, 1, 0.3, 1] }}
+          style={{ willChange: 'transform, opacity' }}
+        >
+          {char}
+        </motion.span>
+      ))}
+    </h2>
+  )
+}
 
 // One zig-zag row with its own section title. The diagram and the copy swap sides
 // on lg+ when `reverse` is set. Below lg the title comes first, then the diagram,
@@ -28,12 +61,14 @@ export default function ModuleShowcase({
   return (
     <section aria-labelledby={sectionTitleId} className={`bg-white ${sectionPadding}`}>
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <Reveal className="mx-auto mb-10 max-w-2xl text-center lg:mb-12">
-          <h2 id={sectionTitleId} className="text-3xl font-bold tracking-tight text-slate-900 lg:text-4xl">
-            {sectionTitle}
-          </h2>
+        <div className="mx-auto mb-10 max-w-2xl text-center lg:mb-12">
+          <LetterHeading
+            id={sectionTitleId}
+            text={sectionTitle}
+            className="text-3xl font-bold tracking-tight text-sky-700 lg:text-4xl"
+          />
           <span aria-hidden="true" className="mx-auto mt-5 block h-1 w-16 rounded-full bg-gradient-to-r from-sky-400 via-sky-500 to-sky-600" />
-        </Reveal>
+        </div>
 
         <div className="grid items-center gap-10 lg:grid-cols-[55fr_45fr] lg:gap-14">
           <Reveal className={`mx-auto w-full max-w-[600px] ${reverse ? 'lg:order-2' : 'lg:order-1'}`}>
@@ -70,16 +105,6 @@ export default function ModuleShowcase({
                 </Reveal>
               ))}
             </ul>
-
-            <Reveal delay={0.21 + bullets.length * 0.07} className="mt-8">
-              <Link
-                to="/contact"
-                className="btn-shine inline-flex min-h-12 items-center justify-center gap-2 rounded-lg bg-sky-500 px-5 py-3 text-sm font-semibold text-white transition-[background-color,transform,box-shadow] duration-200 hover:-translate-y-0.5 motion-reduce:transform-none hover:bg-sky-600 hover:shadow-sm active:scale-[.98] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600"
-              >
-                Talk to us
-                <Icon name="arrow-right" size={17} />
-              </Link>
-            </Reveal>
           </div>
         </div>
       </div>
