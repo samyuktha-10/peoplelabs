@@ -3,6 +3,7 @@ import { motion, useReducedMotion } from 'motion/react'
 import { FadeUp, StaggerGroup, StaggerItem } from '../components/motion/MotionPrimitives.jsx'
 import CareerApplicationForm from '../components/CareerApplicationForm.jsx'
 import Icon from '../components/Icon.jsx'
+import CareersOrbitVisual from '../components/CareersOrbitVisual.jsx'
 import { careers } from '../data/careers.js'
 import { scrollToElement } from '../components/fx/scroll.js'
 import HeroBackdrop from '../components/fx/HeroBackdrop.jsx'
@@ -165,6 +166,9 @@ export default function Careers() {
               <span className="text-sm text-slate-500">Edmonton-based remote opportunities</span>
             </StaggerItem>
           </StaggerGroup>
+          <FadeUp className="mx-auto w-full max-w-[560px] lg:justify-self-end" delay={0.42} animateOnMount>
+            <CareersOrbitVisual />
+          </FadeUp>
         </div>
       </section>
 
