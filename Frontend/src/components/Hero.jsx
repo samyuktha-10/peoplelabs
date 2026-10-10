@@ -72,7 +72,7 @@ export default function Hero() {
             stagger={0.06}
             className="text-4xl font-bold leading-[1.05] tracking-tight text-slate-900 sm:text-5xl lg:text-6xl"
             segments={[
-              { text: 'Oracle & PeopleSoft', wordClassName: 'text-shimmer' },
+              { text: 'Oracle Cloud & PeopleSoft', wordClassName: 'text-shimmer' },
               { text: ' Expertise That Moves Your Business Forward' },
             ]}
           />
