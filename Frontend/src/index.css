@@ -1,0 +1,53 @@
+@import 'tailwindcss' important;
+
+/* Keep the existing presentation for routes already present in this project.
+   The homepage is styled with Tailwind utilities. */
+@import './styles/tokens.css';
+@import './styles/base.css';
+@import './styles/layout.css';
+@import './styles/components.css';
+@import './styles/navbar.css';
+@import './styles/hero.css';
+@import './styles/footer.css';
+@import './styles/pages.css';
+@import './styles/interactive.css';
+@import './styles/fx.css';
+
+:root {
+  font-family: var(--font-sans);
+  color: #475569;
+  background: #fff;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 6.5rem;
+}
+
+body {
+  min-width: 320px;
+  margin: 0;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+::selection {
+  background: #e0f2fe;
+  color: #0f172a;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
