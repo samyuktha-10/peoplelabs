@@ -47,14 +47,15 @@ const right = [
   },
 ]
 
-// Blueprint layout: plus-grid backdrop, a hexagon ring that slowly turns around a
-// rounded hub, a sweep line, and light packets that run along each connector.
+// 3D blueprint layout: a perspective floor of flattened hexagon rings and ellipses,
+// extruded hub and module cards, tube-like connectors and packets that run along them.
 const W = 600
 const H = 520
 const CX = W / 2
 const CY = 260
 const NODE_W = 160
 const NODE_H = 66
+const EXTRUDE = 6
 const LEFT_X = 12
 const RIGHT_X = W - 12 - NODE_W
 const ROW_SPACING = 100
@@ -80,6 +81,9 @@ function hexPoints(radius) {
     return `${(CX + radius * Math.cos(angle)).toFixed(2)},${(CY + radius * Math.sin(angle)).toFixed(2)}`
   }).join(' ')
 }
+
+// Flatten a group toward the viewer so it reads as a floor in perspective.
+const FLOOR_TRANSFORM = `translate(${CX} ${CY}) scale(1 0.5) translate(${-CX} ${-CY})`
 
 export default function ScmEcosystemVisual() {
   const reduceMotion = useReducedMotion()
@@ -112,10 +116,27 @@ export default function ScmEcosystemVisual() {
       aria-label="Oracle Fusion SCM ecosystem: Product Management, Inventory Management, Order Management, Pricing, RSSP, Purchasing, Sourcing, Procurement Contracts, SQM and Cost Management"
     >
       <defs>
-        <pattern id="scm-grid" width="30" height="30" patternUnits="userSpaceOnUse">
-          <path d="M30 0H0V30" fill="none" stroke="#BAE6FD" strokeWidth="0.8" opacity="0.7" />
-          <path d="M15 11v8M11 15h8" stroke="#38BDF8" strokeWidth="1.2" strokeLinecap="round" opacity="0.6" />
-        </pattern>
+        <radialGradient id="scm-floor" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stopColor="#7DD3FC" stopOpacity="0.42" />
+          <stop offset="70%" stopColor="#BAE6FD" stopOpacity="0.16" />
+          <stop offset="100%" stopColor="#BAE6FD" stopOpacity="0" />
+        </radialGradient>
+        <linearGradient id="scm-face" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#FFFFFF" />
+          <stop offset="100%" stopColor="#F1F8FD" />
+        </linearGradient>
+        <linearGradient id="scm-side" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#CFE6F5" />
+          <stop offset="100%" stopColor="#8EC2E3" />
+        </linearGradient>
+        <linearGradient id="scm-chip" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#E6F6FE" />
+          <stop offset="100%" stopColor="#BAE6FD" />
+        </linearGradient>
+        <linearGradient id="scm-hub-chip" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#38BDF8" />
+          <stop offset="100%" stopColor="#0284C7" />
+        </linearGradient>
         <radialGradient id="scm-glow" cx="50%" cy="50%" r="50%">
           <stop offset="0%" stopColor="#38BDF8" stopOpacity="0.28" />
           <stop offset="100%" stopColor="#38BDF8" stopOpacity="0" />
@@ -125,54 +146,54 @@ export default function ScmEcosystemVisual() {
           <stop offset="100%" stopColor="#0EA5E9" stopOpacity="0.6" />
         </linearGradient>
         <filter id="scm-card" x="-40%" y="-40%" width="180%" height="180%">
-          <feDropShadow dx="0" dy="7" stdDeviation="11" floodColor="#0F172A" floodOpacity="0.09" />
+          <feDropShadow dx="0" dy="9" stdDeviation="8" floodColor="#0C4A6E" floodOpacity="0.16" />
+        </filter>
+        <filter id="scm-hub-shadow" x="-50%" y="-100%" width="200%" height="300%">
+          <feGaussianBlur stdDeviation="6" />
         </filter>
       </defs>
 
-      {/* Backdrop: plus-grid panel with two hexagon rings */}
-      <rect x="0" y="0" width={W} height={H} rx="28" fill="#F8FCFF" />
-      <rect x="0" y="0" width={W} height={H} rx="28" fill="url(#scm-grid)" />
-      <polygon points={hexPoints(236)} fill="none" stroke="#BAE6FD" strokeWidth="1.2" />
-      <polygon
-        points={hexPoints(186)}
-        fill="none"
-        stroke="#7DD3FC"
-        strokeWidth="1.2"
-        strokeDasharray="4 10"
-        className={reduceMotion ? undefined : 'scm-spin-slow'}
-      />
-
-      {/* Soft glow and turning hub ring */}
-      <circle cx={CX} cy={CY} r="170" fill="url(#scm-glow)" />
-      <polygon
-        points={hexPoints(150)}
-        fill="none"
-        stroke="#38BDF8"
-        strokeWidth="1.6"
-        strokeDasharray="2 8"
-        opacity="0.8"
-        className={reduceMotion ? undefined : 'scm-spin'}
-      />
+      {/* Perspective floor: flattened hexagon rings, ellipses and a soft glow (no pattern) */}
+      <ellipse cx={CX} cy={CY + 118} rx="236" ry="50" fill="url(#scm-floor)" />
+      <g transform={FLOOR_TRANSFORM}>
+        <polygon points={hexPoints(236)} fill="none" stroke="#BAE6FD" strokeWidth="1.4" opacity="0.9" />
+        <polygon
+          points={hexPoints(186)}
+          fill="none"
+          stroke="#7DD3FC"
+          strokeWidth="1.2"
+          strokeDasharray="4 10"
+          className={reduceMotion ? undefined : 'scm-spin-slow'}
+        />
+      </g>
+      <ellipse cx={CX} cy={CY} r="170" fill="url(#scm-glow)" />
+      <ellipse cx={CX} cy={CY + 26} rx="116" ry="44" fill="none" stroke="#38BDF8" strokeWidth="1" opacity="0.5" />
 
       {/* Sweep line from the hub outward */}
       {!reduceMotion && (
-        <line
-          x1={CX}
-          y1={CY}
-          x2={CX + 236}
-          y2={CY}
-          stroke="url(#scm-sweep)"
-          strokeWidth="2"
-          className="scm-sweep"
-        />
+        <line x1={CX} y1={CY} x2={CX + 236} y2={CY} stroke="url(#scm-sweep)" strokeWidth="2" className="scm-sweep" />
       )}
 
-      {/* Connectors draw in once, staggered, when the diagram scrolls into view */}
-      <g fill="none" stroke="#0EA5E9" strokeWidth="2" strokeLinecap="round">
+      {/* Connectors: tube-like (soft wide under-stroke + bright line). Draw in once, staggered. */}
+      <g fill="none" strokeLinecap="round">
+        {connectors.map((c, index) => (
+          <motion.path
+            key={`tube-${index}`}
+            d={c.d}
+            stroke="#BAE6FD"
+            strokeWidth="7"
+            initial={reduceMotion ? false : { pathLength: 0, opacity: 0 }}
+            whileInView={reduceMotion ? undefined : { pathLength: 1, opacity: 0.45 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.8, ease: 'easeInOut', delay: 0.15 + index * 0.06 }}
+          />
+        ))}
         {connectors.map((c, index) => (
           <motion.path
             key={`line-${index}`}
             d={c.d}
+            stroke="#0EA5E9"
+            strokeWidth="2"
             initial={reduceMotion ? false : { pathLength: 0, opacity: 0 }}
             whileInView={reduceMotion ? undefined : { pathLength: 1, opacity: 1 }}
             viewport={{ once: true, amount: 0.3 }}
@@ -215,12 +236,17 @@ export default function ScmEcosystemVisual() {
         ))}
       </g>
 
-      {/* Hub: rounded card with icon, title and subtitle */}
+      {/* Hub: extruded block with a gradient top face */}
+      <ellipse cx={CX} cy={HUB.y + HUB.h + 18} rx="96" ry="9" fill="#0F172A" opacity="0.14" filter="url(#scm-hub-shadow)" />
       <g>
+        <rect x={HUB.x} y={HUB.y + 10} width={HUB.w} height={HUB.h} rx="28" fill="#7DD3FC" opacity="0.55" />
+        <rect x={HUB.x} y={HUB.y + 6} width={HUB.w} height={HUB.h} rx="28" fill="url(#scm-side)" />
         <g filter="url(#scm-card)">
-          <rect x={HUB.x} y={HUB.y} width={HUB.w} height={HUB.h} rx="28" fill="#FFFFFF" stroke="#BAE6FD" strokeWidth="1.5" />
+          <rect x={HUB.x} y={HUB.y} width={HUB.w} height={HUB.h} rx="28" fill="url(#scm-face)" stroke="#BAE6FD" strokeWidth="1.5" />
         </g>
-        <rect x={CX - 20} y={HUB.y + 12} width="40" height="40" rx="12" fill="#0EA5E9" />
+        <path d={`M${HUB.x + 22} ${HUB.y + 1.5} H${HUB.x + HUB.w - 22}`} stroke="#FFFFFF" strokeWidth="1.5" strokeLinecap="round" />
+        <rect x={CX - 20} y={HUB.y + 12} width="40" height="40" rx="12" fill="url(#scm-hub-chip)" />
+        <rect x={CX - 20} y={HUB.y + 12} width="40" height="40" rx="12" fill="none" stroke="#FFFFFF" strokeOpacity="0.5" strokeWidth="1" />
         <g transform={`translate(${CX - 16.8} ${HUB.y + 14.2}) scale(1.4)`} fill="none" stroke="#FFFFFF" strokeWidth="1.35" strokeLinecap="round" strokeLinejoin="round">
           <path d="M12 3 3 7.5 12 12l9-4.5L12 3Z" />
           <path d="M3 12l9 4.5L21 12" />
@@ -234,10 +260,11 @@ export default function ScmEcosystemVisual() {
         </text>
       </g>
 
-      {/* Module cards: staggered reveal, then a gentle float */}
+      {/* Module cards: extruded faces, staggered reveal, then a gentle float */}
       {nodes.map((node, index) => {
         const lines = splitLabel(node.label)
         const firstBaseline = node.cy + 6 - (lines.length - 1) * 8
+        const top = node.cy - NODE_H / 2
         return (
           <motion.g
             key={node.label}
@@ -252,8 +279,10 @@ export default function ScmEcosystemVisual() {
               style={{ animationDuration: MODULE_DURATIONS[index % MODULE_DURATIONS.length], animationDelay: `${index * 0.28}s` }}
               filter="url(#scm-card)"
             >
-              <rect x={node.x} y={node.cy - NODE_H / 2} width={NODE_W} height={NODE_H} rx="12" fill="#FFFFFF" stroke="#E2E8F0" strokeWidth="1.5" />
-              <rect x={node.x + 12} y={node.cy - 16} width="32" height="32" rx="9" fill="#E0F2FE" />
+              <rect x={node.x} y={top + EXTRUDE} width={NODE_W} height={NODE_H} rx="12" fill="url(#scm-side)" />
+              <rect x={node.x} y={top} width={NODE_W} height={NODE_H} rx="12" fill="url(#scm-face)" stroke="#DCE7F1" strokeWidth="1.2" />
+              <path d={`M${node.x + 12} ${top + 1.5} H${node.x + NODE_W - 12}`} stroke="#FFFFFF" strokeWidth="1.5" strokeLinecap="round" />
+              <rect x={node.x + 12} y={node.cy - 16} width="32" height="32" rx="9" fill="url(#scm-chip)" />
               <g transform={`translate(${node.x + 18} ${node.cy - 10}) scale(0.833)`} fill="none" stroke="#0284C7" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round">
                 {node.glyph}
               </g>
@@ -264,7 +293,7 @@ export default function ScmEcosystemVisual() {
                   </tspan>
                 ))}
               </text>
-              <circle cx={node.x + NODE_W - 12} cy={node.cy - NODE_H / 2 + 12} r="3" fill="#0EA5E9" className={reduceMotion ? undefined : 'hero-visual__node'} />
+              <circle cx={node.x + NODE_W - 12} cy={top + 12} r="3" fill="#0EA5E9" className={reduceMotion ? undefined : 'hero-visual__node'} />
             </g>
           </motion.g>
         )

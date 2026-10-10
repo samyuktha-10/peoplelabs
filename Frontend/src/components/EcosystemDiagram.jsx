@@ -1,8 +1,14 @@
 import { useRef } from 'react'
 import { motion, useMotionValue, useReducedMotion, useScroll, useSpring, useTransform } from 'motion/react'
 
-// Animated hub diagram. Every instance uses the same canvas and card grid, so the
+// Animated 3D hub diagram. Every instance uses the same canvas and card grid, so the
 // SCM and Financials diagrams match exactly.
+//
+// 3D treatment (SVG only, no pattern):
+//  - a perspective floor (flattened ellipses) sits under the hub
+//  - the hub and each module card are extruded: a darker layer sits underneath,
+//    and the top face uses a soft vertical gradient with a highlight edge
+//  - connectors are tube-like: a wide soft under-stroke with the bright line on top
 //
 // Motion (transform and opacity only):
 //  - connector lines draw in once when they scroll into view, staggered
@@ -10,7 +16,7 @@ import { motion, useMotionValue, useReducedMotion, useScroll, useSpring, useTran
 //  - pulse rings expand from the hub, and an orbit dot circles it
 //  - the hub card floats gently (CSS, see hero.css) above a soft shadow
 //  - module cards sit at different depths and drift at different speeds on scroll
-//  - pointer movement tilts the backdrop slightly
+//  - pointer movement tilts the floor slightly
 // Reduced-motion users get the static layout.
 
 const W = 600
@@ -19,6 +25,7 @@ const CX = W / 2
 const CY = 260
 const NODE_W = 160
 const NODE_H = 66
+const EXTRUDE = 6
 const LEFT_X = 12
 const RIGHT_X = W - 12 - NODE_W
 const ROW_SPACING = 100
@@ -51,13 +58,13 @@ export default function EcosystemDiagram({ hubTitle, hubSubtitle, left = [], rig
   const svgRef = useRef(null)
   const { scrollYProgress } = useScroll({ target: svgRef, offset: ['start end', 'end start'] })
 
-  // Pointer tilt on the backdrop.
+  // Pointer tilt on the floor.
   const pointerX = useMotionValue(0)
   const pointerY = useMotionValue(0)
   const springX = useSpring(pointerX, { stiffness: 90, damping: 24, mass: 0.55 })
   const springY = useSpring(pointerY, { stiffness: 90, damping: 24, mass: 0.55 })
-  const backgroundX = useTransform(springX, (value) => value * -0.45)
-  const backgroundY = useTransform(springY, (value) => value * -0.45)
+  const floorX = useTransform(springX, (value) => value * -0.45)
+  const floorY = useTransform(springY, (value) => value * -0.45)
 
   function handlePointerMove(event) {
     if (reduceMotion || event.pointerType !== 'mouse') return
@@ -103,45 +110,59 @@ export default function EcosystemDiagram({ hubTitle, hubSubtitle, left = [], rig
       onPointerLeave={resetPointer}
     >
       <defs>
-        <pattern id={`eco-dots-${uid}`} width="18" height="18" patternUnits="userSpaceOnUse">
-          <circle cx="2" cy="2" r="1.4" fill="#38BDF8" opacity="0.28" />
-        </pattern>
+        <radialGradient id={`eco-floor-${uid}`} cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stopColor="#7DD3FC" stopOpacity="0.42" />
+          <stop offset="70%" stopColor="#BAE6FD" stopOpacity="0.16" />
+          <stop offset="100%" stopColor="#BAE6FD" stopOpacity="0" />
+        </radialGradient>
+        <linearGradient id={`eco-face-${uid}`} x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#FFFFFF" />
+          <stop offset="100%" stopColor="#F1F8FD" />
+        </linearGradient>
+        <linearGradient id={`eco-side-${uid}`} x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#CFE6F5" />
+          <stop offset="100%" stopColor="#8EC2E3" />
+        </linearGradient>
+        <linearGradient id={`eco-chip-${uid}`} x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#E6F6FE" />
+          <stop offset="100%" stopColor="#BAE6FD" />
+        </linearGradient>
+        <linearGradient id={`eco-hub-chip-${uid}`} x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#38BDF8" />
+          <stop offset="100%" stopColor="#0284C7" />
+        </linearGradient>
         <radialGradient id={`eco-glow-${uid}`} cx="50%" cy="50%" r="50%">
           <stop offset="0%" stopColor="#38BDF8" stopOpacity="0.32" />
           <stop offset="100%" stopColor="#38BDF8" stopOpacity="0" />
         </radialGradient>
-        <filter id="eco-card" x="-40%" y="-40%" width="180%" height="180%">
-          <feDropShadow dx="0" dy="7" stdDeviation="11" floodColor="#0F172A" floodOpacity="0.09" />
+        <filter id={`eco-card-${uid}`} x="-40%" y="-40%" width="180%" height="180%">
+          <feDropShadow dx="0" dy="9" stdDeviation="8" floodColor="#0C4A6E" floodOpacity="0.16" />
         </filter>
-        <filter id="eco-hub-shadow" x="-50%" y="-100%" width="200%" height="300%">
+        <filter id={`eco-hub-shadow-${uid}`} x="-50%" y="-100%" width="200%" height="300%">
           <feGaussianBlur stdDeviation="6" />
         </filter>
       </defs>
 
-      {/* Backdrop (pointer tilt) */}
-      <motion.g style={{ x: backgroundX, y: backgroundY }}>
-        <circle cx={CX} cy={CY} r="240" fill="#F0F9FF" />
-        <circle cx={CX} cy={CY} r="240" fill="none" stroke="#E0F2FE" strokeWidth="1.5" />
-        <circle cx={CX} cy={CY} r="256" fill="none" stroke="#BAE6FD" strokeWidth="1.5" strokeDasharray="3 9" opacity="0.7" />
-        <rect width={W} height={H} fill={`url(#eco-dots-${uid})`} opacity="0.5" />
-        <rect x="44" y="30" width="14" height="14" rx="4" fill="#38BDF8" opacity="0.85" transform="rotate(20 51 37)" className="hero-visual__tech-dot" />
-        <rect x={W - 56} y={H - 84} width="12" height="12" rx="4" fill="#BAE6FD" transform={`rotate(-15 ${W - 50} ${H - 78})`} className="hero-visual__tech-dot" style={{ animationDelay: '1.2s' }} />
-        <g fill="#0EA5E9" opacity="0.5" className="hero-visual__tech-dot">
-          <circle cx="70" cy={H - 40} r="3" /><circle cx="86" cy={H - 32} r="3" /><circle cx="56" cy={H - 26} r="3" />
-        </g>
+      {/* Perspective floor (pointer tilt): flattened rings and a soft glow */}
+      <motion.g style={{ x: floorX, y: floorY }}>
+        <ellipse cx={CX} cy={CY + 118} rx="236" ry="50" fill={`url(#eco-floor-${uid})`} />
+        <ellipse cx={CX} cy={CY + 26} rx="236" ry="92" fill="none" stroke="#BAE6FD" strokeWidth="1.4" opacity="0.8" />
+        <ellipse cx={CX} cy={CY + 26} rx="176" ry="68" fill="none" stroke="#7DD3FC" strokeWidth="1.2" opacity="0.7" />
+        <ellipse cx={CX} cy={CY + 26} rx="116" ry="44" fill="none" stroke="#38BDF8" strokeWidth="1" opacity="0.5" />
       </motion.g>
 
       {/* Soft glow behind the hub */}
       <circle cx={CX} cy={CY} r="170" fill={`url(#eco-glow-${uid})`} />
 
-      {/* Pulse rings expanding from the hub */}
+      {/* Pulse rings expanding from the hub, flattened to match the floor */}
       {!reduceMotion && (
         <g fill="none" stroke="#38BDF8" strokeWidth="1.6">
           {[0, 1.5].map((delay) => (
-            <circle key={delay} cx={CX} cy={CY} r="110">
-              <animate attributeName="r" values="110;200" dur="3s" begin={`${delay}s`} repeatCount="indefinite" />
+            <ellipse key={delay} cx={CX} cy={CY + 26} rx="116" ry="44">
+              <animate attributeName="rx" values="116;236" dur="3s" begin={`${delay}s`} repeatCount="indefinite" />
+              <animate attributeName="ry" values="44;92" dur="3s" begin={`${delay}s`} repeatCount="indefinite" />
               <animate attributeName="opacity" values="0.6;0" dur="3s" begin={`${delay}s`} repeatCount="indefinite" />
-            </circle>
+            </ellipse>
           ))}
         </g>
       )}
@@ -157,12 +178,27 @@ export default function EcosystemDiagram({ hubTitle, hubSubtitle, left = [], rig
         <circle cx={CX} cy="30" r="4.5" fill="#3F8F2C" />
       </g>
 
-      {/* Connector lines: draw in once, staggered, when the diagram scrolls into view */}
-      <g fill="none" stroke="#0EA5E9" strokeWidth="2" strokeLinecap="round">
+      {/* Connectors: tube-like (soft wide under-stroke + bright line). Draw in once, staggered. */}
+      <g fill="none" strokeLinecap="round">
+        {connectors.map((c, index) => (
+          <motion.path
+            key={`tube-${index}`}
+            d={c.d}
+            stroke="#BAE6FD"
+            strokeWidth="7"
+            opacity="0.45"
+            initial={reduceMotion ? false : { pathLength: 0, opacity: 0 }}
+            whileInView={reduceMotion ? undefined : { pathLength: 1, opacity: 0.45 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.8, ease: 'easeInOut', delay: 0.15 + index * 0.08 }}
+          />
+        ))}
         {connectors.map((c, index) => (
           <motion.path
             key={`line-${index}`}
             d={c.d}
+            stroke="#0EA5E9"
+            strokeWidth="2"
             initial={reduceMotion ? false : { pathLength: 0, opacity: 0 }}
             whileInView={reduceMotion ? undefined : { pathLength: 1, opacity: 1 }}
             viewport={{ once: true, amount: 0.3 }}
@@ -198,14 +234,17 @@ export default function EcosystemDiagram({ hubTitle, hubSubtitle, left = [], rig
         ))}
       </g>
 
-      {/* Hub: glow ring, soft shadow, and floating card */}
-      <circle cx={CX} cy={CY} r="124" fill="none" stroke="#7DD3FC" strokeWidth="1.5" className={reduceMotion ? undefined : 'eco-hub-ring'} />
-      <ellipse cx={CX} cy={HUB.y + HUB.h + 16} rx="92" ry="9" fill="#0F172A" opacity="0.1" filter="url(#eco-hub-shadow)" />
+      {/* Hub: extruded block with a gradient top face and floating motion */}
+      <ellipse cx={CX} cy={HUB.y + HUB.h + 18} rx="96" ry="9" fill="#0F172A" opacity="0.14" filter={`url(#eco-hub-shadow-${uid})`} />
       <g className={reduceMotion ? undefined : 'eco-hub'}>
-        <g filter="url(#eco-card)">
-          <rect x={HUB.x} y={HUB.y} width={HUB.w} height={HUB.h} rx="16" fill="#FFFFFF" stroke="#BAE6FD" strokeWidth="1.5" />
+        <rect x={HUB.x} y={HUB.y + 10} width={HUB.w} height={HUB.h} rx="16" fill="#7DD3FC" opacity="0.55" />
+        <rect x={HUB.x} y={HUB.y + 6} width={HUB.w} height={HUB.h} rx="16" fill={`url(#eco-side-${uid})`} />
+        <g filter={`url(#eco-card-${uid})`}>
+          <rect x={HUB.x} y={HUB.y} width={HUB.w} height={HUB.h} rx="16" fill={`url(#eco-face-${uid})`} stroke="#BAE6FD" strokeWidth="1.5" />
         </g>
-        <rect className="hero-visual__hub" x={CX - 20} y={HUB.y + 14} width="40" height="40" rx="11" fill="#0EA5E9" />
+        <path d={`M${HUB.x + 14} ${HUB.y + 1.5} H${HUB.x + HUB.w - 14}`} stroke="#FFFFFF" strokeWidth="1.5" strokeLinecap="round" />
+        <rect x={CX - 20} y={HUB.y + 14} width="40" height="40" rx="11" fill={`url(#eco-hub-chip-${uid})`} />
+        <rect x={CX - 20} y={HUB.y + 14} width="40" height="40" rx="11" fill="none" stroke="#FFFFFF" strokeOpacity="0.5" strokeWidth="1" />
         <g transform={`translate(${CX - 16.8} ${HUB.y + 17.2}) scale(1.4)`} fill="none" stroke="#FFFFFF" strokeWidth="1.35" strokeLinecap="round" strokeLinejoin="round">
           <path d="M12 3 3 7.5 12 12l9-4.5L12 3Z" />
           <path d="M3 12l9 4.5L21 12" />
@@ -215,10 +254,11 @@ export default function EcosystemDiagram({ hubTitle, hubSubtitle, left = [], rig
         <text x={CX} y={HUB.y + 96} textAnchor="middle" fontSize="11" fontWeight="500" fill="#64748B">{hubSubtitle}</text>
       </g>
 
-      {/* Module cards: depth parallax on scroll, then a staggered reveal */}
+      {/* Module cards: extruded faces, depth parallax on scroll, then a staggered reveal */}
       {nodes.map((node, index) => {
         const lines = splitLabel(node.label)
         const firstBaseline = node.cy + 6 - (lines.length - 1) * 8
+        const top = node.cy - NODE_H / 2
         const card = (
           <motion.g
             style={{ transformBox: 'fill-box', transformOrigin: 'center', willChange: 'transform, opacity' }}
@@ -227,9 +267,11 @@ export default function EcosystemDiagram({ hubTitle, hubSubtitle, left = [], rig
             viewport={{ once: true, amount: 0.2 }}
             transition={{ type: 'spring', stiffness: 170, damping: 16, delay: 0.3 + index * 0.07 }}
           >
-            <g className="hero-visual__module" style={{ animationDuration: moduleDurations[index % moduleDurations.length], animationDelay: `${index * 0.28}s` }} filter="url(#eco-card)">
-              <rect x={node.x} y={node.cy - NODE_H / 2} width={NODE_W} height={NODE_H} rx="12" fill="#FFFFFF" stroke="#E2E8F0" strokeWidth="1.5" />
-              <rect x={node.x + 12} y={node.cy - 16} width="32" height="32" rx="9" fill="#E0F2FE" />
+            <g className="hero-visual__module" style={{ animationDuration: moduleDurations[index % moduleDurations.length], animationDelay: `${index * 0.28}s` }} filter={`url(#eco-card-${uid})`}>
+              <rect x={node.x} y={top + EXTRUDE} width={NODE_W} height={NODE_H} rx="12" fill={`url(#eco-side-${uid})`} />
+              <rect x={node.x} y={top} width={NODE_W} height={NODE_H} rx="12" fill={`url(#eco-face-${uid})`} stroke="#DCE7F1" strokeWidth="1.2" />
+              <path d={`M${node.x + 12} ${top + 1.5} H${node.x + NODE_W - 12}`} stroke="#FFFFFF" strokeWidth="1.5" strokeLinecap="round" />
+              <rect x={node.x + 12} y={node.cy - 16} width="32" height="32" rx="9" fill={`url(#eco-chip-${uid})`} />
               <g transform={`translate(${node.x + 18} ${node.cy - 10}) scale(0.833)`} fill="none" stroke="#0284C7" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round">
                 {node.glyph}
               </g>
