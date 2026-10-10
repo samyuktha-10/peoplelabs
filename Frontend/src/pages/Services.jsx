@@ -10,6 +10,7 @@ import Hero3D from '../components/fx/Hero3D.jsx'
 import Scroll3D from '../components/fx/Scroll3D.jsx'
 import ScmEcosystemVisual from '../components/ScmEcosystemVisual.jsx'
 import FinancialsEcosystemVisual from '../components/FinancialsEcosystemVisual.jsx'
+import ModuleShowcase from '../components/ModuleShowcase.jsx'
 
 const processSteps = [
   { title: 'Assess', description: 'Understand the current environment and requirements.', icon: 'search' },
@@ -51,9 +52,9 @@ export default function Services() {
 
       <ServicesExplorer />
 
-      <section id="oracle-fusion-scm" className="ambient-bg border-t border-sky-100 bg-white py-14 sm:py-16 lg:py-20" aria-labelledby="oracle-fusion-scm-title">
+      <section id="oracle-cloud" className="ambient-bg border-t border-sky-100 bg-white pt-14 sm:pt-16 lg:pt-20" aria-labelledby="oracle-fusion-scm-title">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <FadeUp className="mx-auto mb-9 max-w-2xl text-center sm:mb-11">
+          <FadeUp className="mx-auto max-w-2xl text-center">
             <p className="mb-3 text-xs font-bold uppercase tracking-[0.16em] text-sky-700">Oracle Cloud</p>
             <h2 id="oracle-fusion-scm-title" className="text-3xl font-bold tracking-tight text-slate-900 lg:text-4xl">
               Oracle Fusion SCM
@@ -62,16 +63,39 @@ export default function Services() {
               End-to-end supply chain capabilities on Oracle Fusion Cloud, from product and inventory to procurement, pricing and cost management.
             </p>
           </FadeUp>
-          <div className="grid gap-8 md:grid-cols-2 md:items-start">
-            <FadeUp className="mx-auto w-full">
-              <ScmEcosystemVisual />
-            </FadeUp>
-            <FadeUp className="mx-auto w-full">
-              <FinancialsEcosystemVisual />
-            </FadeUp>
-          </div>
         </div>
       </section>
+
+      <ModuleShowcase
+        id="oracle-fusion-scm"
+        eyebrow="ORACLE CLOUD · SCM"
+        title="Oracle Fusion SCM"
+        description="Supply chain, procurement and manufacturing capabilities delivered on Oracle Fusion Cloud SCM."
+        bullets={[
+          'Implementation of Procurement, Inventory Management and Order Management',
+          'Manufacturing and Supply Chain Planning configuration',
+          'Cloud readiness and migration planning for your supply chain',
+          'Hybrid integrations with your existing PeopleSoft and third-party systems',
+          'Reporting and ongoing technical and functional support',
+        ]}
+        diagram={<ScmEcosystemVisual />}
+      />
+
+      <ModuleShowcase
+        id="oracle-fusion-financials"
+        eyebrow="ORACLE CLOUD · FINANCIALS"
+        title="Oracle Fusion Financials"
+        description="Cloud financials that modernize accounting, cash and asset management on Oracle Fusion Cloud ERP."
+        bullets={[
+          'Implementation of General Ledger, Accounts Payable and Accounts Receivable',
+          'Cash Management, Fixed Assets and Fusion Expenses configuration',
+          'Fusion Tax setup and rollout',
+          'Cloud readiness and migration planning for finance operations',
+          'Reporting and ongoing technical and functional support',
+        ]}
+        diagram={<FinancialsEcosystemVisual />}
+        reverse
+      />
 
       <section className="ambient-bg bg-white py-14 sm:py-16 lg:py-20" aria-labelledby="service-approach-heading">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
