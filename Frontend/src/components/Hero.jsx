@@ -72,13 +72,13 @@ export default function Hero() {
             stagger={0.06}
             className="text-4xl font-bold leading-[1.05] tracking-tight text-slate-900 sm:text-5xl lg:text-6xl"
             segments={[
-              { text: 'Oracle & PeopleSoft', wordClassName: 'text-shimmer' },
+              { text: 'Oracle cloud & PeopleSoft', wordClassName: 'text-shimmer' },
               { text: ' Expertise That Moves Your Business Forward' },
             ]}
           />
 
           <motion.p variants={rise} initial={initial} animate={state} custom={0.65} className="mt-6 max-w-xl text-base leading-7 text-slate-600 sm:text-lg sm:leading-8">
-            Founded in 2016, PeopleLabs Consulting provides high-quality IT consulting services to organizations across a range of industries. Our expertise spans PeopleSoft FSCM, PeopleSoft HCM, PeopleSoft Campus Solutions, Oracle Cloud, managed services, training, and reporting.
+            Founded in 2016, PeopleLabs Consulting provides high-quality IT consulting services to organizations across a range of industries. Our expertise spans Oracle fusion supply chain, OracleCloud Financials, Oracle Fusion SCM, PeopleSoft FSCM, PeopleSoft HCM, PeopleSoft Campus Solutions, Oracle Cloud, managed services, training, and reporting.
           </motion.p>
 
           <motion.div variants={rise} initial={initial} animate={state} custom={0.78} className="mt-7 inline-flex items-center gap-2.5 text-sm font-medium text-slate-700">

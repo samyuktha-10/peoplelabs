@@ -5,11 +5,11 @@
 export const company = {
   name: 'PeopleLabs Consulting',
   founded: 2016,
-  address: ['3269 Cherry Crescent SW', 'Edmonton, Alberta T6X 1Y5', 'Canada'],
+  address: [ 'Edmonton, Alberta T6X 1Y5', 'Canada'],
   phone: '+1 587 400 3360',
   phoneHref: 'tel:+15874003360',
-  email: 'kiran.rajan@peoplelabsconsulting.com',
-  emailHref: 'mailto:kiran.rajan@peoplelabsconsulting.com',
+  email: 'support@peoplelabsconsulting.com',
+  emailHref: 'mailto:support@peoplelabsconsulting.com',
   whatsapp: '+1 587 400 3360',
   whatsappHref:
     'https://wa.me/15874003360?text=' +

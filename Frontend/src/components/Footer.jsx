@@ -105,7 +105,7 @@ export default function Footer() {
                 <Logo size="footer" tone="light" />
               </div>
               <p className="mt-5 max-w-sm text-sm leading-7 text-sky-50">
-                Founded in 2016, PeopleLabs Consulting provides high-quality IT consulting services specializing in Oracle and PeopleSoft technologies for organizations across a range of industries.
+                Founded in 2016, PeopleLabs Consulting provides high-quality IT consulting services specializing in Oracle Fusion and PeopleSoft technologies for organizations across a range of industries.
               </p>
             </StaggerItem>
 
