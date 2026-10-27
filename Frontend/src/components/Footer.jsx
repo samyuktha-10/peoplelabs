@@ -174,7 +174,10 @@ export default function Footer() {
           </StaggerGroup>
 
           <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-white/25 pt-6 text-center text-sm text-sky-50 sm:flex-row sm:text-left">
-            <p>© {year} PeopleLabs Consulting. All rights reserved.</p>
+            <div>
+              <p>© {year} PeopleLabs Consulting. All rights reserved.</p>
+              <p className="mt-1 text-xs text-sky-100">Designed And Developed By Infolexus Solutions</p>
+            </div>
             <a
               href={company.whatsappHref}
               target="_blank"
