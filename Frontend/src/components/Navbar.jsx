@@ -61,7 +61,7 @@ export default function Navbar() {
     <header className={`sticky top-0 z-50 border-b transition-[background-color,box-shadow,border-color] duration-300 ${barColor}`}>
       <div className={`mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 transition-[height] duration-300 ease-out sm:px-6 lg:px-8 ${scrolled ? 'h-[72px] lg:h-[88px]' : 'h-[78px] lg:h-24'}`}>
         <Link to="/" onClick={handleHomeClick} aria-label="PeopleLabs Consulting home" className={`shrink-0 rounded-sm transition-transform duration-300 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white ${scrolled ? 'scale-[.96]' : 'scale-100'}`}>
-          <Logo decorative />
+          <Logo decorative tone="light" />
         </Link>
 
         <nav className="hidden items-center gap-1 lg:flex xl:gap-2" aria-label="Primary" onPointerLeave={() => setHovered(null)}>
