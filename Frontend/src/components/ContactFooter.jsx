@@ -405,9 +405,11 @@ export default function ContactFooter({ scrollTo, showUpperForm = true }) {
           </div>
 
           {/* Bottom Copyright Divider & Bar */}
-          <div className="pt-6 border-t border-white/20 flex flex-col sm:flex-row items-center justify-between text-xs text-sky-100 font-medium relative">
-            <p className="w-full text-center">
-              © 2026 PeopleLabs Consulting. All rights reserved.
+          <div className="pt-6 border-t border-white/20 flex flex-col sm:flex-row items-center justify-center text-xs text-sky-100 font-medium relative">
+            <p className="w-full text-center flex flex-col items-center justify-center gap-1 sm:flex-row sm:gap-2">
+              <span>© 2026 PeopleLabs Consulting. All rights reserved.</span>
+              <span aria-hidden="true" className="hidden text-white/50 sm:inline">|</span>
+              <span className="text-sky-50">Designed And Developed By Infolexus Solutions</span>
             </p>
           </div>
 
