@@ -17,7 +17,7 @@ const quickLinks = [
   { to: '/about', label: 'About Us' },
 ]
 
-const mapAddress = '3269 Cherry Crescent SW, Edmonton, Alberta T6X 1Y5, Canada'
+const mapAddress = 'Edmonton, Alberta, Canada'
 const mapSrc = `https://maps.google.com/maps?q=${encodeURIComponent(mapAddress)}&output=embed`
 
 function ContactItem({ icon, children }) {
